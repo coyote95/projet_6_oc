@@ -1,55 +1,45 @@
-/* Reset des styles par défaut */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: Arial, sans-serif;
     background-color: #111;
-    color: #fff;
+    color: white;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 3%;
+    padding: 0.2rem 3%;
     background-color: #000;
 }
 
 .logo img {
-    width: 100px;
+    width: 60px;
+    background-color: white;
 }
 
-.navigation ul {
+nav ul {
     list-style: none;
     display: flex;
 }
 
-.navigation ul li {
+nav ul li {
     margin-right: 1.5rem;
     font-weight: bold;
     cursor: pointer;
 }
 
-.profile img {
-    width: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-}
 
-.hero {
+
+.affiche {
     position: relative;
-    height: 90vh;
+    height: 70vh;
     overflow: hidden;
 }
 
-.background img {
+.affiche img {
     object-fit: cover;
     width: 100%;
-    height: 100%;
+    height: auto;
     position: absolute;
     top: 0;
     left: 0;
@@ -62,7 +52,7 @@ header {
     left: 3%;
     transform: translateY(-50%);
     z-index: 1;
-    width: 50%;
+
 }
 
 h1 {
