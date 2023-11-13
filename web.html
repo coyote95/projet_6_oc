@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste de Films</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Fonction pour récupérer l'année de chaque film et l'afficher
+            function displayMovieYears() {
+                $.ajax({
+                    url: 'http://localhost:8000/api/v1/titles/',
+                    method: 'GET',
+                    success: function (data) {
+                        const movies = data.results;
+
+                        // Effacez le contenu précédent
+                        $('#movie-years').empty();
+
+                        // Afficher les années des films
+                        movies.forEach(function (movie) {
+                            const movieYear = `
+                                <div class="movie-year">
+                                    <p>Année de "${movie.title}": ${movie.year}</p>
+                                </div>`;
+                            $('#movie-years').append(movieYear);
+                        });
+                    },
+                    error: function () {
+                        console.error('Erreur lors de la requête Ajax');
+                    }
+                });
+            }
+
+            // Appel de la fonction pour afficher les années au chargement de la page
+            displayMovieYears();
+        });
+    </script>
+</head>
+<body>
+    <h1>Années des Films</h1>
+    <div id="movie-years">
+        <!-- Les années des films seront affichées ici -->
+    </div>
+</body>
+</html>
