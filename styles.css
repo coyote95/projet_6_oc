@@ -91,7 +91,15 @@ p {
     overflow: scroll;
     gap: 1rem;
     padding-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent; 
 }
+
+.movie-list::-webkit-scrollbar {
+    display: none;
+}
+
+
 
 h2 {
     font-size: 1.5rem;
