@@ -1,22 +1,26 @@
-const itemsPerPage = 1; // Nombre d'éléments à afficher par page
+const itemsPerPage = 1; // Défiler une image à la fois
 let currentPage = 0; // Page actuelle
 const maxPages = 10; // Nombre maximum de pages à charger
 
 function displayMovieImages(url) {
   if (currentPage < maxPages) {
-    $.ajax({
-      url: url,
-      method: 'GET',
-      success: function (data) {
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
         const movies = data.results;
 
         // Sélectionner l'élément conteneur pour le carrousel
-        const carouselContainer = $('#carousel');
+        const carouselContainer = document.getElementById('carousel');
 
         // Ajouter les images au carrousel
         movies.forEach(function (movie) {
-          const carouselItem = `<div class="carousel-item"><img src="${movie.image_url}" alt="${movie.title}"></div>`;
-          carouselContainer.append(carouselItem);
+          const carouselItem = document.createElement('div');
+          carouselItem.className = 'carousel-item';
+          const img = document.createElement('img');
+          img.src = movie.image_url;
+          img.alt = movie.title;
+          carouselItem.appendChild(img);
+          carouselContainer.appendChild(carouselItem);
         });
 
         // Vérifier s'il y a une page suivante
@@ -28,11 +32,10 @@ function displayMovieImages(url) {
           // Mettre à jour le carrousel une fois toutes les images chargées
           updateCarousel();
         }
-      },
-      error: function () {
-        console.error('Erreur lors de la requête Ajax');
-      }
-    });
+      })
+      .catch(error => {
+        console.error('Erreur lors de la requête Fetch', error);
+      });
   }
 }
 
@@ -40,7 +43,7 @@ function displayMovieImages(url) {
 displayMovieImages('http://localhost:8000/api/v1/titles/');
 
 function nextSlide() {
-  const carouselItems = $('.carousel-item');
+  const carouselItems = document.querySelectorAll('.carousel-item');
   const pageCount = Math.ceil(carouselItems.length / itemsPerPage);
 
   if (currentPage < pageCount - 1) {
@@ -55,13 +58,13 @@ function prevSlide() {
   if (currentPage > 0) {
     currentPage--;
   } else {
-    currentPage = Math.ceil($('.carousel-item').length / itemsPerPage) - 1;
+    currentPage = Math.ceil(document.querySelectorAll('.carousel-item').length / itemsPerPage) - 1;
   }
   updateCarousel();
 }
 
 function updateCarousel() {
-  const itemWidth = $('.carousel-item').outerWidth();
+  const itemWidth = document.querySelector('.carousel-item').offsetWidth;
   const newTransformValue = -currentPage * itemsPerPage * itemWidth + 'px';
-  $('#carousel').css('transform', 'translateX(' + newTransformValue + ')');
+  document.getElementById('carousel').style.transform = 'translateX(' + newTransformValue + ')';
 }
