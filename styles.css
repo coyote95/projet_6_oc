@@ -32,7 +32,7 @@ nav ul li {
 
 .affiche {
     position: relative;
-    height: 70vh;
+    height: 40vh;
     overflow: hidden;
 }
 
@@ -66,18 +66,20 @@ p {
     margin-bottom: 1.5rem;
 }
 
-.cta-button {
+.play-button {
     display: inline-block;
     padding: 1rem 2rem;
     background-color: #e50914;
+    border: none; 
     color: #fff;
     text-decoration: none;
     font-weight: bold;
     border-radius: 5px;
     transition: background-color 0.2s;
+    cursor: pointer;
 }
 
-.cta-button:hover {
+.play-button:hover {
     background-color: #ff0f24;
 }
 
@@ -92,11 +94,7 @@ p {
     gap: 1rem;
     padding-bottom: 1rem;
     scrollbar-width: thin;
-    scrollbar-color: transparent transparent; 
-}
-
-.movie-list::-webkit-scrollbar {
-    /* display: none; */
+    scrollbar-color: transparent transparent;
 }
 
 
@@ -116,4 +114,28 @@ footer {
 
 footer p {
     font-size: 0.8rem;
+}
+
+#carousel-container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+  }
+  
+  #carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-item {
+    flex: 0 0 auto;
+  }
+  
+  button {
+    cursor: pointer;
+  }
+  
+  button {
+    background-color: transparent;
+    border: none 
 }

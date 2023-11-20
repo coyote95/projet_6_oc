@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="test.js" defer></script>
+    <script src="script.js" defer></script>
     <title>JustStreamIt</title>
 </head>
 <body>
@@ -22,20 +21,32 @@
         </nav>
     </header>
     
-    <div class="affiche">
+    <section class="affiche">
         <img src="films/film1.jpg" alt="film à l'affiche">
         <div class="content">
             <h1>Titre du film</h1>
-            <a href="#" class="cta-button">PLAY</a>
+            <button class="play-button">PLAY</button>
         </div>
-    </div>
-    
-    <div class="movies">
-        <h2>Films les mieux notés</h2>
-        <div class="movie-list" id="movie-list">
-           <!-- javascript sur categorie id movie-list -->
-        </div>
+    </section>
 
+
+    
+    <section class="movies">
+        <h2>Films les mieux notés</h2>
+        
+            <div id="carousel-container">
+                <div id="carousel">
+                  <!-- Les éléments du carrousel seront ajoutés dynamiquement -->
+                </div>
+              </div>
+              
+              <button onclick="prevSlide()">
+                <img src="fleche_gauche.png" alt="fleche gauche">
+                </button>
+              <button onclick="nextSlide()">Suivant</button>
+           <!-- javascript sur categorie id movie-list -->
+        
+</section>
     
     <footer>
         <p>&copy; 2023 JustStreamIt </p>
