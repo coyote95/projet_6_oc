@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <script src="script.js" defer></script>
     <title>JustStreamIt</title>
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -20,7 +22,7 @@
             </ul>
         </nav>
     </header>
-    
+
     <section class="affiche">
         <img src="films/film1.jpg" alt="film à l'affiche">
         <div class="content">
@@ -30,26 +32,39 @@
     </section>
 
 
-    
+
     <section class="movies">
         <h2>Films les mieux notés</h2>
-        
-            <div id="carousel-container">
-                <div id="carousel">
-                  <!-- Les éléments du carrousel seront ajoutés dynamiquement -->
-                </div>
-              </div>
-              
-              <button onclick="prevSlide()">
+
+        <div class="content_fleche">
+
+            <button onclick="prevSlide()">
                 <img src="fleche_gauche.png" alt="fleche gauche">
-                </button>
-              <button onclick="nextSlide()">Suivant</button>
-           <!-- javascript sur categorie id movie-list -->
-        
-</section>
-    
+            </button>
+            <div id="carousel-container">
+
+
+                <div id="carousel">
+                    <!-- Les éléments du carrousel seront ajoutés dynamiquement -->
+                </div>
+            </div>
+
+            <button onclick="nextSlide()">
+                <img src="fleche_droite.png" alt="fleche_droite">
+            </button>
+            <!-- javascript sur categorie id movie-list -->
+        </div>
+    </section>
+
+    <div id="myModal" class="modal">
+        <div id="modalContent" class="modal-content">
+            <!-- Contenu de la fenêtre modale -->
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2023 JustStreamIt </p>
     </footer>
 </body>
+
 </html>

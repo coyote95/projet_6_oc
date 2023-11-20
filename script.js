@@ -19,6 +19,9 @@ function displayMovieImages(url) {
           const img = document.createElement('img');
           img.src = movie.image_url;
           img.alt = movie.title;
+          img.onclick = function () {
+            openModal(movie.title, movie.director, movie.year);
+        };
           carouselItem.appendChild(img);
           carouselContainer.appendChild(carouselItem);
         });
@@ -67,4 +70,23 @@ function updateCarousel() {
   const itemWidth = document.querySelector('.carousel-item').offsetWidth;
   const newTransformValue = -currentPage * itemsPerPage * itemWidth + 'px';
   document.getElementById('carousel').style.transform = 'translateX(' + newTransformValue + ')';
+}
+
+function openModal(title, director, year) {
+    const modal = document.getElementById('myModal');
+    const modalContent = document.getElementById('modalContent');
+
+    modal.style.display = 'block';
+    modalContent.innerHTML = `
+        <h2>${title}</h2>
+        <p>Réalisateur: ${director}</p>
+        <p>Année de sortie: ${year}</p>
+        <button onclick="closeModal()">Fermer</button>
+    `;
+}
+
+// Fonction pour fermer la fenêtre modale
+function closeModal() {
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'none';
 }

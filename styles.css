@@ -88,16 +88,6 @@ p {
 
 }
 
-.movie-list {
-    display: flex;
-    overflow-y: scroll;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
-}
-
-
 
 h2 {
     font-size: 1.5rem;
@@ -138,4 +128,9 @@ footer p {
   button {
     background-color: transparent;
     border: none 
+}
+
+.content_fleche{
+    display: flex;
+    width: 100%;
 }
