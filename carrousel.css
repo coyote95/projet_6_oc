@@ -1,5 +1,6 @@
 #carousel-container {
-    width: 100%;
+    width: 80%;
+    margin: auto;
     overflow: hidden;
   }
   
@@ -9,7 +10,7 @@
   }
   
   .carousel-item {
-    width: 100%;
+    flex: 0 0 auto;
   }
   
   button {
