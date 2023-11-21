@@ -9,17 +9,21 @@ let loadedPages = 1; // Nouvelle variable pour suivre le nombre de pages chargé
 
 function displayMovieImages(url, sectionId) {
 
-  console.log(url);
+  console.log("URL:", url);
+  console.log("Section ID:", sectionId);
 
   fetch(url)
     .then(response => response.json())
     .then(data => {
 
 
-      if(sectionId=="1")
-      {nexturl1= data.next;}
-      else (sectionId=="2")
-      {nexturl2= data.next;}
+      if (sectionId == "1") {
+        nexturl1 = data.next;
+      } else if (sectionId == "2") {
+        nexturl2 = data.next;
+      }
+
+
       const movies = data.results;
       const carouselContainer = document.getElementById(`carousel-container${sectionId}`);
       const carousel = carouselContainer.querySelector('.carousel');
@@ -62,12 +66,18 @@ start = 1;
 
 function nextSlide(sectionId) {
 
-  
+  console.log("sectionid:",sectionId)
+  conteur_next++;
     let nexturl;
-    if (sectionId === '1') {
+    if (sectionId == '1') {
       nexturl = nexturl1;
-    } else if (sectionId === '2') {
+      console.log("nexturl bouton:",nexturl)
+    } else if (sectionId == '2') {
       nexturl = nexturl2;
+      console.log("nexturl bouton:",nexturl)
+    }
+    else{
+      console.log("pas de donnee")
     }
   
     if (conteur_next >= 5) {
@@ -85,6 +95,7 @@ function nextSlide(sectionId) {
     currentImage = 0;
   }
   updateCarousel(sectionId);
+ 
 }
 
 function prevSlide(sectionId) {
