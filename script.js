@@ -31,13 +31,13 @@ function displayMovieImages(url, sectionId) {
 
       const nexturl = data.next;
 
-      // if ((nexturl !== null) && (start !== 0) && (loadedPages < maxPages)) {
-      //   displayMovieImages(nexturl, sectionId);
-      //   updateCarousel(sectionId);
-      //   loadedPages++;
-      // } else {
-      //   updateCarousel(sectionId);
-      // }
+    //   if ((nexturl !== null) && (start !== 0) && (loadedPages < maxPages)) {
+    //  displayMovieImages(nexturl, sectionId);
+    //     updateCarousel(sectionId);
+    //      loadedPages++;
+    //   } else {
+    //      updateCarousel(sectionId);
+    //    }
     })
     .catch(error => {
       console.error('Erreur lors de la requête Fetch', error);
@@ -47,6 +47,8 @@ function displayMovieImages(url, sectionId) {
 
 // Appel initial avec l'URL de la première page
 displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score','2');
+displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score','2');
+displayMovieImages('http://localhost:8000/api/v1/titles/','1');
 displayMovieImages('http://localhost:8000/api/v1/titles/','1');
 start = 1;
 
@@ -54,7 +56,7 @@ function nextSlide() {
   conteur_next++;
 
   if (conteur_next >= 5) {
-    displayMovieImages(nexturl);
+    displayMovieImages(nexturl,'1');
     conteur_next = 0;
   }
 
@@ -66,7 +68,7 @@ function nextSlide() {
   } else {
     currentImage = 0;
   }
-  updateCarousel();
+  updateCarousel('1');
 }
 
 function prevSlide() {
@@ -78,10 +80,16 @@ function prevSlide() {
   updateCarousel();
 }
 
-function updateCarousel() {
-  const itemWidth = document.querySelector('.carousel-item').offsetWidth;
+function updateCarousel(sectionId) {
+  const itemWidth = document.querySelector(`#carousel-container${sectionId} .carousel-item`).offsetWidth;
   const newTransformValue = -currentImage * itemsPerPage * itemWidth + 'px';
-  document.getElementById('carousel').style.transform = 'translateX(' + newTransformValue + ')';
+  const carouselContainer = document.getElementById(`carousel-container${sectionId}`);
+  
+  if (carouselContainer) {
+    carouselContainer.querySelector('.carousel').style.transform = 'translateX(' + newTransformValue + ')';
+  } else {
+    console.error(`Carousel container with ID 'carousel-container${sectionId}' not found.`);
+  }
 }
 
 function openModal(title, director, year) {
