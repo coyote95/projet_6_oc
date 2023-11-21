@@ -1,9 +1,10 @@
 const itemsPerPage = 1; // Défiler une image à la fois
-let currentPage = 0; // Page actuelle
+let currentImage = 0; // Page actuelle
 const maxPages = 10; // Nombre maximum de pages à charger
+let nexturl='http://localhost:8000/api/v1/titles/'
 
 function displayMovieImages(url) {
-  if (currentPage < maxPages) {
+  
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -25,50 +26,56 @@ function displayMovieImages(url) {
           carouselItem.appendChild(img);
           carouselContainer.appendChild(carouselItem);
         });
-
-        // Vérifier s'il y a une page suivante
-        if (data.next !== null) {
-          // Appel récursif pour la page suivante seulement si la limite n'est pas atteinte
-          currentPage++;
-          displayMovieImages(data.next);
-        } else {
-          // Mettre à jour le carrousel une fois toutes les images chargées
-          updateCarousel();
-        }
+        nexturl=data.next
+        // // Vérifier s'il y a une page suivante
+        // if (data.next !== null) {
+        //   // Appel récursif pour la page suivante seulement si la limite n'est pas atteinte
+        //   currentImage++;
+        //   console.log(currentImage);
+        //   console.log(data.next);
+        //   displayMovieImages(data.next);
+        // } else {
+        //   // Mettre à jour le carrousel une fois toutes les images chargées
+        //   updateCarousel();
+        // }
       })
       .catch(error => {
         console.error('Erreur lors de la requête Fetch', error);
       });
-  }
+  
 }
 
 // Appel initial avec l'URL de la première page
+
+displayMovieImages('http://localhost:8000/api/v1/titles/');
 displayMovieImages('http://localhost:8000/api/v1/titles/');
 
 function nextSlide() {
+  displayMovieImages(nexturl);
   const carouselItems = document.querySelectorAll('.carousel-item');
   const pageCount = Math.ceil(carouselItems.length / itemsPerPage);
 
-  if (currentPage < pageCount - 1) {
-    currentPage++;
+  if (currentImage < pageCount - 1) {
+    currentImage++;
+    console.log(currentImage)
   } else {
-    currentPage = 0;
+    currentImage = 0;
   }
   updateCarousel();
 }
 
 function prevSlide() {
-  if (currentPage > 0) {
-    currentPage--;
+  if (currentImage > 0) {
+    currentImage--;
   } else {
-    currentPage = Math.ceil(document.querySelectorAll('.carousel-item').length / itemsPerPage) - 1;
+    currentImage = Math.ceil(document.querySelectorAll('.carousel-item').length / itemsPerPage) - 1;
   }
   updateCarousel();
 }
 
 function updateCarousel() {
   const itemWidth = document.querySelector('.carousel-item').offsetWidth;
-  const newTransformValue = -currentPage * itemsPerPage * itemWidth + 'px';
+  const newTransformValue = -currentImage * itemsPerPage * itemWidth + 'px';
   document.getElementById('carousel').style.transform = 'translateX(' + newTransformValue + ')';
 }
 
