@@ -2,6 +2,7 @@ const itemsPerPage = 1; // Défiler une image à la fois
 let currentImage = 0; // Page actuelle
 const maxPages = 10; // Nombre maximum de pages à charger
 let nexturl='http://localhost:8000/api/v1/titles/'
+let conteur_next=0;
 
 function displayMovieImages(url) {
   
@@ -48,16 +49,23 @@ function displayMovieImages(url) {
 // Appel initial avec l'URL de la première page
 
 displayMovieImages('http://localhost:8000/api/v1/titles/');
-displayMovieImages('http://localhost:8000/api/v1/titles/');
+displayMovieImages("http://localhost:8000/api/v1/titles/?page=2");
 
 function nextSlide() {
-  displayMovieImages(nexturl);
+  conteur_next++;
+  if (conteur_next>=5)
+ 
+   {displayMovieImages(nexturl);
+    conteur_next=0;
+  }
   const carouselItems = document.querySelectorAll('.carousel-item');
   const pageCount = Math.ceil(carouselItems.length / itemsPerPage);
-
+ 
   if (currentImage < pageCount - 1) {
     currentImage++;
-    console.log(currentImage)
+    
+    console.log("currente image:"+currentImage)
+    console.log("totale image:"+pageCount)
   } else {
     currentImage = 0;
   }
