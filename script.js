@@ -1,17 +1,25 @@
 const itemsPerPage = 1;
 let currentImage = 0;
 const maxPages = 2; // Chargez seulement deux pages au démarrage
-let nexturl = 'http://localhost:8000/api/v1/titles/';
+let nexturl1 = 'http://localhost:8000/api/v1/titles/';
+let nexturl2='http://localhost:8000/api/v1/titles/?sort_by=-imdb_score';
 let conteur_next = 0;
 let start = 0;
 let loadedPages = 1; // Nouvelle variable pour suivre le nombre de pages chargées
 
 function displayMovieImages(url, sectionId) {
+
   console.log(url);
 
   fetch(url)
     .then(response => response.json())
     .then(data => {
+
+
+      if(sectionId=="1")
+      {nexturl1= data.next;}
+      else (sectionId=="2")
+      {nexturl2= data.next;}
       const movies = data.results;
       const carouselContainer = document.getElementById(`carousel-container${sectionId}`);
       const carousel = carouselContainer.querySelector('.carousel');
@@ -52,13 +60,21 @@ displayMovieImages('http://localhost:8000/api/v1/titles/','1');
 displayMovieImages('http://localhost:8000/api/v1/titles/','1');
 start = 1;
 
-function nextSlide(id) {
-  conteur_next++;
+function nextSlide(sectionId) {
 
-  if (conteur_next >= 5) {
-    displayMovieImages(nexturl,id);
-    conteur_next = 0;
-  }
+  
+    let nexturl;
+    if (sectionId === '1') {
+      nexturl = nexturl1;
+    } else if (sectionId === '2') {
+      nexturl = nexturl2;
+    }
+  
+    if (conteur_next >= 5) {
+      displayMovieImages(nexturl, sectionId);
+      conteur_next = 0;
+    }
+
 
   const carouselItems = document.querySelectorAll('.carousel-item');
   const pageCount = Math.ceil(carouselItems.length / itemsPerPage);
@@ -68,16 +84,16 @@ function nextSlide(id) {
   } else {
     currentImage = 0;
   }
-  updateCarousel(id);
+  updateCarousel(sectionId);
 }
 
-function prevSlide() {
+function prevSlide(sectionId) {
   if (currentImage > 0) {
     currentImage--;
   } else {
     currentImage = Math.ceil(document.querySelectorAll('.carousel-item').length / itemsPerPage) - 1;
   }
-  updateCarousel();
+  updateCarousel(sectionId);
 }
 
 function updateCarousel(sectionId) {
