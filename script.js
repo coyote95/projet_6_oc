@@ -95,7 +95,7 @@ function nextSlide(sectionId) {
     updateCarousel(sectionId, currentImage1);
   }
 
-   else if (sectionId == '2') {
+  else if (sectionId == '2') {
     compteur2++;
     const carouselItems = document.querySelectorAll('.carousel-item');
     const pageCount = Math.ceil(carouselItems.length / itemsPerPage);
@@ -118,12 +118,25 @@ function nextSlide(sectionId) {
 
 
 function prevSlide(sectionId) {
-  if (currentImage > 0) {
-    currentImage--;
-  } else {
-    currentImage = Math.ceil(document.querySelectorAll('.carousel-item').length / itemsPerPage) - 1;
+
+
+  if (sectionId == '1') {
+    if (currentImage1 > 0) {
+      currentImage1--;
+    } else {
+      currentImage1 = Math.ceil(document.querySelectorAll('.carousel-item').length / itemsPerPage) - 1;
+    }
+    updateCarousel(sectionId,currentImage1);
   }
-  updateCarousel(sectionId);
+  else if(sectionId == '2'){
+    if (currentImage2 > 0) {
+      currentImage2--;
+    } else {
+      currentImage2 = Math.ceil(document.querySelectorAll('.carousel-item').length / itemsPerPage) - 1;
+    }
+    updateCarousel(sectionId,currentImage2);
+
+  }
 }
 
 function updateCarousel(sectionId, currentImage) {
