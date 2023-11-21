@@ -52,11 +52,11 @@ displayMovieImages('http://localhost:8000/api/v1/titles/','1');
 displayMovieImages('http://localhost:8000/api/v1/titles/','1');
 start = 1;
 
-function nextSlide() {
+function nextSlide(id) {
   conteur_next++;
 
   if (conteur_next >= 5) {
-    displayMovieImages(nexturl,'1');
+    displayMovieImages(nexturl,id);
     conteur_next = 0;
   }
 
@@ -68,7 +68,7 @@ function nextSlide() {
   } else {
     currentImage = 0;
   }
-  updateCarousel('1');
+  updateCarousel(id);
 }
 
 function prevSlide() {
