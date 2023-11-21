@@ -106,13 +106,13 @@ footer p {
     font-size: 0.8rem;
 }
 
-#carousel-container {
+#carousel-container1, #carousel-container2{
     width: 80%;
     margin: auto;
     overflow: hidden;
   }
   
-  #carousel {
+  .carousel {
     display: flex;
     transition: transform 0.5s ease-in-out;
   }

@@ -6,14 +6,15 @@ let conteur_next = 0;
 let start = 0;
 let loadedPages = 1; // Nouvelle variable pour suivre le nombre de pages chargées
 
-function displayMovieImages(url,) {
+function displayMovieImages(url, sectionId) {
   console.log(url);
 
   fetch(url)
     .then(response => response.json())
     .then(data => {
       const movies = data.results;
-      const carouselContainer = document.getElementById('carousel');
+      const carouselContainer = document.getElementById(`carousel-container${sectionId}`);
+      const carousel = carouselContainer.querySelector('.carousel');
 
       movies.forEach(function (movie) {
         const carouselItem = document.createElement('div');
@@ -25,26 +26,28 @@ function displayMovieImages(url,) {
           openModal(movie.title, movie.director, movie.year);
         };
         carouselItem.appendChild(img);
-        carouselContainer.appendChild(carouselItem);
+        carousel.appendChild(carouselItem);
       });
 
-      nexturl = data.next;
+      const nexturl = data.next;
 
-      if ((data.next !== null) && (start !== 0) && (loadedPages < maxPages)) {
-        displayMovieImages(nexturl);
-        updateCarousel();
-        loadedPages++;
-      } else {
-        updateCarousel();
-      }
+      // if ((nexturl !== null) && (start !== 0) && (loadedPages < maxPages)) {
+      //   displayMovieImages(nexturl, sectionId);
+      //   updateCarousel(sectionId);
+      //   loadedPages++;
+      // } else {
+      //   updateCarousel(sectionId);
+      // }
     })
     .catch(error => {
       console.error('Erreur lors de la requête Fetch', error);
     });
 }
 
+
 // Appel initial avec l'URL de la première page
-displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
+displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score','2');
+displayMovieImages('http://localhost:8000/api/v1/titles/','1');
 start = 1;
 
 function nextSlide() {

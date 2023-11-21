@@ -33,7 +33,7 @@
 
 
 
-    <section class="movies">
+    <section id="1">
         <h2>Films les mieux notés</h2>
 
         <div class="content_fleche">
@@ -41,10 +41,33 @@
             <button onclick="prevSlide()">
                 <img src="fleche_gauche.png" alt="fleche gauche">
             </button>
-            <div id="carousel-container">
+            <div id="carousel-container1">
 
 
-                <div id="carousel">
+                <div class="carousel">
+                    <!-- Les éléments du carrousel seront ajoutés dynamiquement -->
+                </div>
+            </div>
+
+            <button onclick="nextSlide()">
+                <img src="fleche_droite.png" alt="fleche_droite">
+            </button>
+            <!-- javascript sur categorie id movie-list -->
+        </div>
+    </section>
+
+    <section id="2">
+        <h2>Films les mieux notés</h2>
+
+        <div class="content_fleche">
+
+            <button onclick="prevSlide()">
+                <img src="fleche_gauche.png" alt="fleche gauche">
+            </button>
+            <div id="carousel-container2">
+
+
+                <div class="carousel">
                     <!-- Les éléments du carrousel seront ajoutés dynamiquement -->
                 </div>
             </div>
