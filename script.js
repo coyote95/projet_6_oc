@@ -10,6 +10,8 @@ let compteur1 = 0;
 let compteur2 = 0;
 let currentImage1 = 0;
 let currentImage2 = 0;
+let start1=0;
+let start2=0;
 
 function displayMovieImages(url, sectionId) {
 
@@ -45,15 +47,35 @@ function displayMovieImages(url, sectionId) {
         carousel.appendChild(carouselItem);
       });
 
-      const nexturl = data.next;
+     
 
-      //   if ((nexturl !== null) && (start !== 0) && (loadedPages < maxPages)) {
-      //  displayMovieImages(nexturl, sectionId);
-      //     updateCarousel(sectionId);
-      //      loadedPages++;
-      //   } else {
-      //      updateCarousel(sectionId);
-      //    }
+      console.log("start1",start1)
+      console.log("start2",start2)
+
+      
+      if(sectionId=="1"){
+        if ((nexturl1 !== null) && (start1 == 0) ) {
+          start1=1;
+        displayMovieImages(nexturl1, sectionId);
+           updateCarousel(sectionId,currentImage1);
+         
+         } else {
+           updateCarousel(sectionId,currentImage1);
+         }
+        }
+        else if(sectionId=="2"){
+         if ((nexturl2 !== null) && (start2 == 0)) {
+          console.log("blabla2");
+          start2=1;
+          displayMovieImages(nexturl2, sectionId);
+             updateCarousel(sectionId,currentImage2);
+           
+           } else {
+             updateCarousel(sectionId,currentImage2);
+           }}
+
+
+
     })
     .catch(error => {
       console.error('Erreur lors de la requête Fetch', error);
@@ -63,10 +85,8 @@ function displayMovieImages(url, sectionId) {
 
 // Appel initial avec l'URL de la première page
 displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score', '2');
-displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score', '2');
 displayMovieImages('http://localhost:8000/api/v1/titles/', '1');
-displayMovieImages('http://localhost:8000/api/v1/titles/', '1');
-start = 1;
+
 
 
 
