@@ -2,10 +2,12 @@ const itemsPerPage = 1;
 let currentImage = 0;
 const maxPages = 2; // Chargez seulement deux pages au démarrage
 let nexturl1 = 'http://localhost:8000/api/v1/titles/';
-let nexturl2='http://localhost:8000/api/v1/titles/?sort_by=-imdb_score';
+let nexturl2 = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score';
 let conteur_next = 0;
 let start = 0;
 let loadedPages = 1; // Nouvelle variable pour suivre le nombre de pages chargées
+let compteur1 = 0;
+let compteur2 = 0;
 
 function displayMovieImages(url, sectionId) {
 
@@ -43,13 +45,13 @@ function displayMovieImages(url, sectionId) {
 
       const nexturl = data.next;
 
-    //   if ((nexturl !== null) && (start !== 0) && (loadedPages < maxPages)) {
-    //  displayMovieImages(nexturl, sectionId);
-    //     updateCarousel(sectionId);
-    //      loadedPages++;
-    //   } else {
-    //      updateCarousel(sectionId);
-    //    }
+      //   if ((nexturl !== null) && (start !== 0) && (loadedPages < maxPages)) {
+      //  displayMovieImages(nexturl, sectionId);
+      //     updateCarousel(sectionId);
+      //      loadedPages++;
+      //   } else {
+      //      updateCarousel(sectionId);
+      //    }
     })
     .catch(error => {
       console.error('Erreur lors de la requête Fetch', error);
@@ -58,32 +60,37 @@ function displayMovieImages(url, sectionId) {
 
 
 // Appel initial avec l'URL de la première page
-displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score','2');
-displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score','2');
-displayMovieImages('http://localhost:8000/api/v1/titles/','1');
-displayMovieImages('http://localhost:8000/api/v1/titles/','1');
+displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score', '2');
+displayMovieImages('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score', '2');
+displayMovieImages('http://localhost:8000/api/v1/titles/', '1');
+displayMovieImages('http://localhost:8000/api/v1/titles/', '1');
 start = 1;
 
 function nextSlide(sectionId) {
 
-  console.log("sectionid:",sectionId)
-  conteur_next++;
-    let nexturl;
-    if (sectionId == '1') {
-      nexturl = nexturl1;
-      console.log("nexturl bouton:",nexturl)
-    } else if (sectionId == '2') {
-      nexturl = nexturl2;
-      console.log("nexturl bouton:",nexturl)
+  console.log("sectionid:", sectionId)
+
+
+
+  if (sectionId == '1') {
+
+    compteur1++;
+
+    if (compteur1 >= 5) {
+      displayMovieImages(nexturl1, sectionId);
+      compteur1 = 0;
     }
-    else{
-      console.log("pas de donnee")
+  } else if (sectionId == '2') {
+
+    compteur2++;
+    if (compteur2 >= 5) {
+      displayMovieImages(nexturl2, sectionId);
+      compteur2 = 0;
     }
-  
-    if (conteur_next >= 5) {
-      displayMovieImages(nexturl, sectionId);
-      conteur_next = 0;
-    }
+  }
+  else {
+    console.log("pas de donnee")
+  }
 
 
   const carouselItems = document.querySelectorAll('.carousel-item');
@@ -91,11 +98,12 @@ function nextSlide(sectionId) {
 
   if (currentImage < pageCount - 1) {
     currentImage++;
+    console.log("current image:", currentImage)
   } else {
     currentImage = 0;
   }
   updateCarousel(sectionId);
- 
+
 }
 
 function prevSlide(sectionId) {
@@ -111,7 +119,7 @@ function updateCarousel(sectionId) {
   const itemWidth = document.querySelector(`#carousel-container${sectionId} .carousel-item`).offsetWidth;
   const newTransformValue = -currentImage * itemsPerPage * itemWidth + 'px';
   const carouselContainer = document.getElementById(`carousel-container${sectionId}`);
-  
+
   if (carouselContainer) {
     carouselContainer.querySelector('.carousel').style.transform = 'translateX(' + newTransformValue + ')';
   } else {
