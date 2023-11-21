@@ -8,6 +8,8 @@ let start = 0;
 let loadedPages = 1; // Nouvelle variable pour suivre le nombre de pages chargées
 let compteur1 = 0;
 let compteur2 = 0;
+let currentImage1 = 0;
+let currentImage2 = 0;
 
 function displayMovieImages(url, sectionId) {
 
@@ -66,6 +68,9 @@ displayMovieImages('http://localhost:8000/api/v1/titles/', '1');
 displayMovieImages('http://localhost:8000/api/v1/titles/', '1');
 start = 1;
 
+
+
+
 function nextSlide(sectionId) {
 
   console.log("sectionid:", sectionId)
@@ -73,38 +78,44 @@ function nextSlide(sectionId) {
 
 
   if (sectionId == '1') {
-
     compteur1++;
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    const pageCount = Math.ceil(carouselItems.length / itemsPerPage);
+    if (currentImage1 < pageCount - 1) {
+      currentImage1++;
+      console.log("current image:", currentImage1)
+    } else {
+      currentImage1 = 0;
+    }
 
     if (compteur1 >= 5) {
       displayMovieImages(nexturl1, sectionId);
       compteur1 = 0;
     }
-  } else if (sectionId == '2') {
+    updateCarousel(sectionId, currentImage1);
+  }
 
+   else if (sectionId == '2') {
     compteur2++;
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    const pageCount = Math.ceil(carouselItems.length / itemsPerPage);
+    if (currentImage2 < pageCount - 1) {
+      currentImage2++;
+      console.log("current image:", currentImage2)
+    } else {
+      currentImage2 = 0;
+    }
+
     if (compteur2 >= 5) {
       displayMovieImages(nexturl2, sectionId);
-      compteur2 = 0;
+      compteur1 = 0;
     }
+    updateCarousel(sectionId, currentImage2);
   }
-  else {
-    console.log("pas de donnee")
-  }
-
-
-  const carouselItems = document.querySelectorAll('.carousel-item');
-  const pageCount = Math.ceil(carouselItems.length / itemsPerPage);
-
-  if (currentImage < pageCount - 1) {
-    currentImage++;
-    console.log("current image:", currentImage)
-  } else {
-    currentImage = 0;
-  }
-  updateCarousel(sectionId);
 
 }
+
+
 
 function prevSlide(sectionId) {
   if (currentImage > 0) {
@@ -115,7 +126,8 @@ function prevSlide(sectionId) {
   updateCarousel(sectionId);
 }
 
-function updateCarousel(sectionId) {
+function updateCarousel(sectionId, currentImage) {
+  console.log("update:", currentImage)
   const itemWidth = document.querySelector(`#carousel-container${sectionId} .carousel-item`).offsetWidth;
   const newTransformValue = -currentImage * itemsPerPage * itemWidth + 'px';
   const carouselContainer = document.getElementById(`carousel-container${sectionId}`);
