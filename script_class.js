@@ -145,18 +145,27 @@ class Carousel {
     }
   
     openModal(title, director, year) {
-      const modal = document.getElementById('myModal');
-      const modalContent = document.getElementById(`modalContent${this.sectionId}`);
-  
-      modal.style.display = 'block';
-      modalContent.innerHTML = `
-          <h2>${title}</h2>
-          <p>Réalisateur: ${director}</p>
-          <p>Année de sortie: ${year}</p>
-          <button onclick="closeModal()">Fermer</button>
-      `;
+        const modal = document.getElementById(`myModal${this.sectionId}`);
+        const modalContent = document.getElementById(`modalContent${this.sectionId}`);
+    
+        modal.style.visibility = 'visible';
+        modalContent.innerHTML = `
+            <h2>${title}</h2>
+            <p>Réalisateur: ${director}</p>
+            <p>Année de sortie: ${year}</p>
+            <button onclick="closeModal('${this.sectionId}')">Fermer</button>
+        `;
     }
+
+    
   }
+
+
+  function closeModal(sectionId) {
+    const modal = document.getElementById(`myModal${sectionId}`);
+    modal.style.visibility = 'hidden';
+}
+
   
   document.addEventListener('DOMContentLoaded', function () {
     // Initialize carousels
@@ -164,4 +173,5 @@ class Carousel {
     const carousel2 = new Carousel('2', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
   });
   
+
 
