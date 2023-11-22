@@ -184,8 +184,11 @@ class Carousel {
   
   document.addEventListener('DOMContentLoaded', function () {
     // Initialize carousels
-    const carousel1 = new Carousel('1', 'http://localhost:8000/api/v1/titles/?');
-    const carousel2 = new Carousel('2', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
+    
+    const carousel1 = new Carousel('1', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
+    const carousel2 = new Carousel('2', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Drama');
+    const carousel3 = new Carousel('3', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Fantasy');
+    const carousel4 = new Carousel('4', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Horror');
   });
   
 

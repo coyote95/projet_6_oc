@@ -11,6 +11,7 @@ header {
     align-items: center;
     padding: 15px 15px;
     background-color: #000;
+    flex-wrap: wrap;
 }
 
 .logo img {
@@ -108,7 +109,9 @@ footer p {
     justify-content: space-evenly;
     gap: 10px;
 }
-#carousel-container1, #carousel-container2{
+#carousel-container1, #carousel-container2,
+#carousel-container3, #carousel-container4
+{
     display: flex;
     width: 80%;
     overflow: hidden;
@@ -141,7 +144,8 @@ footer p {
     margin-left: 20px;
     display: flex;
     gap:10px;
-    align-items: center
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .modal h2{
