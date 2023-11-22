@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <script src="script_class.js" defer></script>
     <title>JustStreamIt</title>
 </head>
 
@@ -33,51 +33,52 @@
 
 
 
+
+
     <section id="1">
         <h2>Films les mieux notés</h2>
-
-        <div class="content_fleche">
-
-            <button onclick="prevSlide(1)">
-                <img src="fleche_gauche.png" alt="fleche gauche">
-            </button>
-            <div id="carousel-container1">
-
-
-                <div class="carousel">
-                    <!-- Les éléments du carrousel seront ajoutés dynamiquement -->
-                </div>
-            </div>
-
-            <button onclick="nextSlide(1)">
-                <img src="fleche_droite.png" alt="fleche_droite">
-            </button>
-            <!-- javascript sur categorie id movie-list -->
-        </div>
+    <!-- Section 1 -->
+    <div id="carousel-container1">
+      <div class="carousel"></div>
+      <button id="nextButton1">Next</button>
+      <button id="prevButton1">Previous</button>
+    </div>
     </section>
 
+    <div id="myModal1" class="modal">
+        <div id="modalContent1" class="modal-content">
+          <!-- Contenu de la fenêtre modale -->
+        </div>
+      </div>
+    
     <section id="2">
         <h2>Films les mieux notés</h2>
 
-        <div class="content_fleche">
+    <!-- Section 2 -->
+    <div id="carousel-container2">
+      <div class="carousel"></div>
+      <button id="nextButton2">Next</button>
+      <button id="prevButton2">Previous</button>
+    </div>
+</section>
+    
+<div id="myModal2" class="modal">
+    <div id="modalContent2" class="modal-content">
+      <!-- Contenu de la fenêtre modale -->
+    </div>
+  </div>
 
-            <button onclick="prevSlide(2)">
-                <img src="fleche_gauche.png" alt="fleche gauche">
-            </button>
-            <div id="carousel-container2">
 
 
-                <div class="carousel">
-                    <!-- Les éléments du carrousel seront ajoutés dynamiquement -->
-                </div>
-            </div>
 
-            <button onclick="nextSlide(2)">
-                <img src="fleche_droite.png" alt="fleche_droite">
-            </button>
+
+
+
+
+
+   
             <!-- javascript sur categorie id movie-list -->
-        </div>
-    </section>
+   
 
     <div id="myModal" class="modal">
         <div id="modalContent" class="modal-content">
