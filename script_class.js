@@ -21,44 +21,54 @@ class Carousel {
       prevButton.addEventListener('click', () => this.prevSlide());
     }
   
-
     displayMovieImages() {
-        if (this.start === 0) {
-          console.log(this.start);
-          this.start = 1;
+        console.log(this.start);
+        this.start = 1;
       
-          const fetchAndDisplay = (url) => {
-            fetch(url)
-              .then(response => response.json())
-              .then(data => {
-                this.nextUrl = data.next;
+        const fetchAndDisplay = async (url) => {
+          try {
+            const response = await fetch(url);
       
-                const movies = data.results;
-                const carouselContainer = document.getElementById(`carousel-container${this.sectionId}`);
-                const carousel = carouselContainer.querySelector('.carousel');
+            if (!response.ok) {
+              throw new Error(`Erreur HTTP ! Status: ${response.status}`);
+            }
       
-                movies.forEach(movie => {
-                  const carouselItem = document.createElement('div');
-                  carouselItem.className = 'carousel-item';
-                  const img = document.createElement('img');
-                  img.src = movie.image_url;
-                  img.alt = movie.title;
-                  img.onclick = () => this.openModal(movie.title, movie.director, movie.year);
-                  carouselItem.appendChild(img);
-                  carousel.appendChild(carouselItem);
-                });
+            const data = await response.json();
       
-                this.updateCarousel();
-              })
-              .catch(error => console.error('Erreur lors de la requête Fetch', error));
-          };
+            if (!data.results) {
+              throw new Error('Réponse de l\'API incorrecte. Aucun résultat trouvé.');
+            }
       
-          fetchAndDisplay(this.nextUrl); // Fetch de la première page
-          fetchAndDisplay(this.nextUrl + "&page=2"); // Fetch de la deuxième page
-        } else {
-          this.updateCarousel();
-        }
+            this.nextUrl = data.next;
+      
+            const movies = data.results;
+            const carouselContainer = document.getElementById(`carousel-container${this.sectionId}`);
+            const carousel = carouselContainer.querySelector('.carousel');
+      
+            movies.forEach(movie => {
+              const carouselItem = document.createElement('div');
+              carouselItem.className = 'carousel-item';
+              const img = document.createElement('img');
+              img.src = movie.image_url;
+              img.alt = movie.title;
+              img.onclick = () => this.openModal(movie.title, movie.director, movie.year);
+              carouselItem.appendChild(img);
+              carousel.appendChild(carouselItem);
+            });
+      
+            this.updateCarousel();
+          } catch (error) {
+            console.error('Erreur lors de la requête Fetch', error);
+          }
+        };
+      
+        // Utilisation de await pour attendre la fin de chaque fetch
+        (async () => {
+          await fetchAndDisplay(this.nextUrl); // Fetch de la première page
+          await fetchAndDisplay(this.nextUrl + "&page=2"); // Fetch de la deuxième page
+        })();
       }
+      
       
       
   
