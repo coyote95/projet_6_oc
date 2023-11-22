@@ -150,10 +150,11 @@ class Carousel {
     
         modal.style.visibility = 'visible';
         modalContent.innerHTML = `
+            <button onclick="closeModal('${this.sectionId}')">X</button>
             <h2>${title}</h2>
             <p>Réalisateur: ${director}</p>
             <p>Année de sortie: ${year}</p>
-            <button onclick="closeModal('${this.sectionId}')">Fermer</button>
+            
         `;
     }
 

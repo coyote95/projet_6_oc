@@ -15,6 +15,7 @@
         <div class="logo">
             <img src="logo.png" alt="JustStreamIt Logo">
         </div>
+        <h1>JustStreamIt</h1>
         <nav>
             <ul>
                 <li>Accueil</li>
@@ -26,7 +27,7 @@
     <section class="affiche">
         <img src="films/film1.jpg" alt="film à l'affiche">
         <div class="content">
-            <h1>Titre du film</h1>
+            <h2>Titre du film</h2>
             <button class="play-button">PLAY</button>
         </div>
     </section>
@@ -37,36 +38,48 @@
 
     <section id="1">
         <h2>Films les mieux notés</h2>
-    <!-- Section 1 -->
-    <div id="carousel-container1">
-      <div class="carousel"></div>
-      <button id="nextButton1">Next</button>
-      <button id="prevButton1">Previous</button>
+        <!-- Section 1 -->
+        <div class="bouton-container" >
+            <button id="prevButton1">
+                <img src="fleche_gauche.png" alt="fleche gauche">
+            </button>
+        <div id="carousel-container1">
+            <div class="carousel"></div>
+        </div>
+        <button id="nextButton1">
+            <img src="fleche_droite.png" alt="fleche_droite">
+        </button>
     </div>
+
+        <div id="myModal1" class="modal">
+            <div id="modalContent1" class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+            </div>
+        </div>
     </section>
 
-    <div id="myModal1" class="modal">
-        <div id="modalContent1" class="modal-content">
-          <!-- Contenu de la fenêtre modale -->
-        </div>
-      </div>
-    
+
     <section id="2">
-        <h2>Films les mieux notés</h2>
-
-    <!-- Section 2 -->
-    <div id="carousel-container2">
-      <div class="carousel"></div>
-      <button id="nextButton2">Next</button>
-      <button id="prevButton2">Previous</button>
+        <h2>Films plus recents</h2>
+        <!-- Section 2 -->
+        <div class="bouton-container" >
+            <button id="prevButton2">
+                <img src="fleche_gauche.png" alt="fleche gauche">
+            </button>
+        <div id="carousel-container2">
+            <div class="carousel"></div>
+        </div>
+        <button id="nextButton2">
+            <img src="fleche_droite.png" alt="fleche_droite">
+        </button>
     </div>
-</section>
-    
-<div id="myModal2" class="modal">
-    <div id="modalContent2" class="modal-content">
-      <!-- Contenu de la fenêtre modale -->
-    </div>
-  </div>
+
+        <div id="myModal2" class="modal">
+            <div id="modalContent2" class="modal-content">
+                <!-- Contenu de la fenêtre modale -->
+            </div>
+        </div>
+    </section>
 
 
 
@@ -76,9 +89,9 @@
 
 
 
-   
-            <!-- javascript sur categorie id movie-list -->
-   
+
+    <!-- javascript sur categorie id movie-list -->
+
 
     <div id="myModal" class="modal">
         <div id="modalContent" class="modal-content">

@@ -1,5 +1,6 @@
 body {
     font-family: Arial, sans-serif;
+    font-size: 16px;
     background-color: #111;
     color: white;
 }
@@ -8,7 +9,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.2rem 3%;
+    padding: 15px 15px;
     background-color: #000;
 }
 
@@ -23,7 +24,7 @@ nav ul {
 }
 
 nav ul li {
-    margin-right: 1.5rem;
+    margin-right: 1em;
     font-weight: bold;
     cursor: pointer;
 }
@@ -32,14 +33,13 @@ nav ul li {
 
 .affiche {
     position: relative;
-    height: 40vh;
+    height: 70vh;
     overflow: hidden;
 }
 
 .affiche img {
-    object-fit: cover;
     width: 100%;
-    height: auto;
+    height:600px ; /* Couvre toute la hauteur du conteneur */
     position: absolute;
     top: 0;
     left: 0;
@@ -56,19 +56,18 @@ nav ul li {
 }
 
 h1 {
-    font-size: 3rem;
+    font-size: 2em;
     font-weight: bold;
-    margin-bottom: 1rem;
 }
 
 p {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 1em;
+    margin-bottom: none;
 }
 
 .play-button {
     display: inline-block;
-    padding: 1rem 2rem;
+    padding: 1em 2em;
     background-color: #e50914;
     border: none; 
     color: #fff;
@@ -83,32 +82,35 @@ p {
     background-color: #ff0f24;
 }
 
-.movies {
-    padding: 3%;
-
-}
-
 
 h2 {
-    font-size: 1.5rem;
+    font-size: 2em;
     font-weight: bold;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 1em;
+    margin-left: 2em ;
+    margin-bottom: 0.5em;
 }
 
 footer {
     background-color: #000;
     text-align: center;
-    padding: 1rem 0;
+    padding: 1em 0;
 }
 
 footer p {
-    font-size: 0.8rem;
+    font-size: 0.8em;
 }
 
+
+.bouton-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+}
 #carousel-container1, #carousel-container2{
+    display: flex;
     width: 80%;
-    margin: auto;
     overflow: hidden;
   }
   
@@ -121,16 +123,35 @@ footer p {
     flex: 0 0 auto;
   }
   
-  button {
-    cursor: pointer;
-  }
+ 
   
   button {
-    background-color: yellow;
-    border: none 
+    background-color: transparent;
+    border: none ;
+    cursor: pointer;
 }
 
-.content_fleche{
-    display: flex;
-    width: 100%;
+.modal button{
+    border: 1px solid white;
+    background-color: gray;
 }
+
+
+.modal-content{
+    margin-left: 20px;
+    display: flex;
+    gap:10px;
+    align-items: center
+}
+
+.modal h2{
+    font-size: 1.2em  ;
+    margin: 0px 0px;
+    padding: 0px 0px;
+} 
+
+.modal p{
+    font-size: 0.8em;
+    margin: 0px 0px;
+    padding: 0px 0px;
+} 
