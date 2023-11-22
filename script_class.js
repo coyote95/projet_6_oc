@@ -5,6 +5,7 @@ class Carousel {
       this.currentImage = 0;
       this.nextUrl = initialUrl;
       this.start = 0;
+      this.compteur=0;
       
   
       this.init();
@@ -92,9 +93,14 @@ class Carousel {
       
   
       nextSlide() {
+        this.compteur++;
         console.log('0k');
         this.currentImage++;
-        this.fetchMovies(); // Move this line after incrementing currentImage
+        if (this.compteur>=4){
+            this.fetchMovies(); 
+            this.compteur=0;
+        }
+        
         const carouselItems = document.querySelectorAll(`#carousel-container${this.sectionId} .carousel-item`);
         const pageCount = Math.ceil(carouselItems.length / this.itemsPerPage);
       
