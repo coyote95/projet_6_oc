@@ -51,7 +51,7 @@ class Carousel {
               const img = document.createElement('img');
               img.src = movie.image_url;
               img.alt = movie.title;
-              img.onclick = () => this.openModal(movie.title, movie.director, movie.year);
+              img.onclick = () => this.openModal(movie.url);
               carouselItem.appendChild(img);
               carousel.appendChild(carouselItem);
             });
@@ -73,7 +73,6 @@ class Carousel {
       
   
     fetchMovies() {
-        console.log(this.nextUrl)
         fetch(this.nextUrl)
           .then(response => response.json())
           .then(data => {
@@ -91,7 +90,7 @@ class Carousel {
               const img = document.createElement('img');
               img.src = movie.image_url;
               img.alt = movie.title;
-              img.onclick = () => this.openModal(movie.title, movie.director, movie.year);
+              img.onclick = () => this.openModal(movie.url);
               carouselItem.appendChild(img);
               carousel.appendChild(carouselItem);
             });
@@ -144,20 +143,35 @@ class Carousel {
       }
     }
   
-    openModal(title, director, year) {
-        const modal = document.getElementById(`myModal${this.sectionId}`);
-        const modalContent = document.getElementById(`modalContent${this.sectionId}`);
+    openModal(urlfilm) {
+        fetch(urlfilm)
+        .then(response => response.json())
+        .then(data => {
+           
     
-        modal.style.visibility = 'visible';
-        modalContent.innerHTML = `
-            <button onclick="closeModal('${this.sectionId}')">X</button>
-            <h2>${title}</h2>
-            <p>Réalisateur: ${director}</p>
-            <p>Année de sortie: ${year}</p>
-            
-        `;
+            const modal = document.getElementById(`myModal${this.sectionId}`);
+            const modalContent = document.getElementById(`modalContent${this.sectionId}`);
+    
+            modal.style.visibility = 'visible';
+            modalContent.innerHTML = `
+                <button onclick="closeModal('${this.sectionId}')">X</button>
+                <h2>${data.title}</h2>
+                <p>Genres ${data.genres}</p>
+                <p>Année de sortie: ${data.year}</p>
+                <p>Rated:${data.rated}</p>
+                <p>Score Imdb:${data.imdb_score}</p>
+                <p>Réalisateur:${data.directors}</p>
+                <p>Acteurs:${data.actors}</p>
+                <p>Durée:${data.duration}</p>
+                <p>Origine:${data.countries}</p>
+                <p>Box Office:${data.worldwide_gross_income}</p>
+                <p>Résumé:${data.description}</p>
+            `;
+        })
+        .catch(error => {
+            console.error('Erreur lors de la requête Fetch', error);
+        });
     }
-
     
   }
 
