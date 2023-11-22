@@ -5,7 +5,7 @@ class Carousel {
       this.currentImage = 0;
       this.nextUrl = initialUrl;
       this.start = 0;
-      this.loadedPages = 1;
+      
   
       this.init();
     }
@@ -20,17 +20,46 @@ class Carousel {
       prevButton.addEventListener('click', () => this.prevSlide());
     }
   
+
     displayMovieImages() {
-        this.fetchMovies();
-      if (this.start == 0) {
-        co
-        this.start = 1;
-       
-        this.fetchMovies();
-      } else {
-        this.updateCarousel();
+        if (this.start === 0) {
+          console.log(this.start);
+          this.start = 1;
+      
+          const fetchAndDisplay = (url) => {
+            fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                this.nextUrl = data.next;
+      
+                const movies = data.results;
+                const carouselContainer = document.getElementById(`carousel-container${this.sectionId}`);
+                const carousel = carouselContainer.querySelector('.carousel');
+      
+                movies.forEach(movie => {
+                  const carouselItem = document.createElement('div');
+                  carouselItem.className = 'carousel-item';
+                  const img = document.createElement('img');
+                  img.src = movie.image_url;
+                  img.alt = movie.title;
+                  img.onclick = () => this.openModal(movie.title, movie.director, movie.year);
+                  carouselItem.appendChild(img);
+                  carousel.appendChild(carouselItem);
+                });
+      
+                this.updateCarousel();
+              })
+              .catch(error => console.error('Erreur lors de la requête Fetch', error));
+          };
+      
+          fetchAndDisplay(this.nextUrl); // Fetch de la première page
+          fetchAndDisplay(this.nextUrl + "&page=2"); // Fetch de la deuxième page
+        } else {
+          this.updateCarousel();
+        }
       }
-    }
+      
+      
   
     fetchMovies() {
         console.log(this.nextUrl)
@@ -56,26 +85,25 @@ class Carousel {
               carousel.appendChild(carouselItem);
             });
       
-            this.loadedPages++; // Increment the loaded pages
-            this.displayMovieImages();
+           
           })
           .catch(error => console.error('Erreur lors de la requête Fetch', error));
       }
       
   
-    nextSlide() {
-    console.log('0k')
-     this.fetchMovies()
-      this.currentImage++;
-      const carouselItems = document.querySelectorAll(`#carousel-container${this.sectionId} .carousel-item`);
-      const pageCount = Math.ceil(carouselItems.length / this.itemsPerPage);
-  
-      if (this.currentImage >= pageCount) {
-        this.currentImage = 0;
+      nextSlide() {
+        console.log('0k');
+        this.currentImage++;
+        this.fetchMovies(); // Move this line after incrementing currentImage
+        const carouselItems = document.querySelectorAll(`#carousel-container${this.sectionId} .carousel-item`);
+        const pageCount = Math.ceil(carouselItems.length / this.itemsPerPage);
+      
+        if (this.currentImage >= pageCount) {
+          this.currentImage = 0;
+        }
+      
+        this.updateCarousel();
       }
-  
-      this.updateCarousel();
-    }
   
     prevSlide() {
       this.currentImage--;
@@ -116,7 +144,8 @@ class Carousel {
   
   document.addEventListener('DOMContentLoaded', function () {
     // Initialize carousels
-    const carousel1 = new Carousel('1', 'http://localhost:8000/api/v1/titles/');
+    const carousel1 = new Carousel('1', 'http://localhost:8000/api/v1/titles/?');
     const carousel2 = new Carousel('2', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
   });
   
+
