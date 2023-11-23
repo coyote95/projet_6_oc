@@ -33,19 +33,13 @@ nav ul li {
 
 
 .affiche {
+    background-image: url("films/film1.jpg");
     position: relative;
-    height: 70vh;
-    overflow: hidden;
+    height: 40vh;
+  
 }
 
-.affiche img {
-    width: 100%;
-    height:600px ; /* Couvre toute la hauteur du conteneur */
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
+
 
 .content {
     position: absolute;
@@ -110,7 +104,8 @@ footer p {
     gap: 10px;
 }
 #carousel-container1, #carousel-container2,
-#carousel-container3, #carousel-container4
+#carousel-container3, #carousel-container4,
+#modalContentAffiche
 {
     display: flex;
     width: 80%;
@@ -164,3 +159,8 @@ footer p {
     margin: 0px 0px;
     padding: 0px 0px;
 } 
+
+.flex{
+    display: flex;
+    
+}

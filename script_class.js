@@ -22,8 +22,6 @@ class Carousel {
     }
   
     displayMovieImages() {
-        console.log(this.start);
-        this.start = 1;
       
         const fetchAndDisplay = async (url) => {
           try {
@@ -176,21 +174,78 @@ class Carousel {
     
   }
 
-
-  function closeModal(sectionId) {
-    const modal = document.getElementById(`myModal${sectionId}`);
-    modal.style.visibility = 'hidden';
-}
-
-  
   document.addEventListener('DOMContentLoaded', function () {
+    const afficheSection = document.getElementById('afficheSection');
+    const modalAffiche = document.getElementById('myModalaffiche');
+    const modalContentAffiche = document.getElementById('modalContentAffiche');
+
+    // URL de l'API pour obtenir le meilleur film
+    const apiUrl = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score';
+    let bestMovie;
+
+    // Fonction pour mettre à jour la section "affiche" avec les détails du meilleur film
+    function updateAffiche(data) {
+        const contentTitle = afficheSection.querySelector('.content h2');
+        contentTitle.textContent = data.title;
+
+        afficheSection.style.backgroundImage = `url(${data.image_url})`;
+    }
+
+    // Fetch pour obtenir les données du meilleur film
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+             bestMovie = data.results[0];
+            updateAffiche(bestMovie);
+        })
+        .catch(error => {
+            console.error('Erreur lors de la requête Fetch', error);
+        });
+
+    // Ajoutez un gestionnaire d'événements au conteneur de la section "affiche"
+    afficheSection.addEventListener('click', function () {
+        openModalInBackground('myModalaffiche');
+    });
+
+    // Fonction pour ouvrir la fenêtre modale en arrière-plan
+    function openModalInBackground(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.visibility = 'visible';
+
+        // Récupérez les caractéristiques du film
+        fetch(bestMovie.url)
+            .then(response => response.json())
+            .then(data => {
+                // Remplissez le contenu de la fenêtre modale avec les caractéristiques du film
+                modalContentAffiche.innerHTML = `
+                    <button onclick="closeModal('${modalId}')">X</button>
+                    <h2>${data.title}</h2>
+                    <img src=${data.image_url} alt=${data.title}></img>
+                    <p>Genres ${data.genres}</p>
+                    <p>Année de sortie: ${data.year}</p>
+                    <p>Rated:${data.rated}</p>
+                    <p>Score Imdb:${data.imdb_score}</p>
+                    <p>Réalisateur:${data.directors}</p>
+                    <p>Acteurs:${data.actors}</p>
+                    <p>Durée:${data.duration}</p>
+                    <p>Origine:${data.countries}</p>
+                    <p>Box Office:${data.worldwide_gross_income}</p>
+                    <p>Résumé:${data.description}</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Erreur lors de la requête Fetch', error);
+            });
+    }
+
     // Initialize carousels
-    
     const carousel1 = new Carousel('1', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
     const carousel2 = new Carousel('2', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Drama');
     const carousel3 = new Carousel('3', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Fantasy');
     const carousel4 = new Carousel('4', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Horror');
-  });
-  
+});
 
-
+function closeModal(sectionId) {
+    const modal = document.getElementById(sectionId);
+    modal.style.visibility = 'hidden';
+}
