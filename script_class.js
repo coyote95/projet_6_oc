@@ -130,15 +130,23 @@ class Carousel {
     }
   
     updateCarousel() {
-      const itemWidth = document.querySelector(`#carousel-container${this.sectionId} .carousel-item`).offsetWidth;
-      const newTransformValue = -this.currentImage * this.itemsPerPage * itemWidth + 'px';
-      const carouselContainer = document.getElementById(`carousel-container${this.sectionId}`);
-  
-      if (carouselContainer) {
-        carouselContainer.querySelector('.carousel').style.transform = 'translateX(' + newTransformValue + ')';
-      } else {
-        console.error(`Carousel container with ID 'carousel-container${this.sectionId}' not found.`);
-      }
+        const itemWidth = document.querySelector(`#carousel-container${this.sectionId} .carousel-item`).offsetWidth;
+        const newTransformValue = -this.currentImage * this.itemsPerPage * itemWidth + 'px';
+        const carouselContainer = document.getElementById(`carousel-container${this.sectionId}`);
+        const prevButton = document.getElementById(`prevButton${this.sectionId}`); // New line
+
+        if (carouselContainer) {
+            carouselContainer.querySelector('.carousel').style.transform = 'translateX(' + newTransformValue + ')';
+            
+            // Toggle visibility of prevButton based on currentImage value
+            if (this.currentImage === 0) {
+                prevButton.style.visibility = 'hidden';
+            } else {
+                prevButton.style.visibility = 'visible';
+            }
+        } else {
+            console.error(`Carousel container with ID 'carousel-container${this.sectionId}' not found.`);
+        }
     }
   
     openModal(urlfilm) {
@@ -155,7 +163,7 @@ class Carousel {
                 <button onclick="closeModal('${this.sectionId}')">X</button>
                 <h2>${data.title}</h2>
                 <img src=${data.image_url} alt=${data.title}</img>
-                <p>Genres ${data.genres}</p>
+                <p>Genres: ${data.genres}</p>
                 <p>Année de sortie: ${data.year}</p>
                 <p>Rated:${data.rated}</p>
                 <p>Score Imdb:${data.imdb_score}</p>
@@ -221,7 +229,7 @@ class Carousel {
                     <button onclick="closeModalAffiche('${modalId}')">X</button>
                     <h2>${data.title}</h2>
                     <img src=${data.image_url} alt=${data.title}></img>
-                    <p>Genres ${data.genres}</p>
+                    <p>Genres: ${data.genres}</p>
                     <p>Année de sortie: ${data.year}</p>
                     <p>Rated:${data.rated}</p>
                     <p>Score Imdb:${data.imdb_score}</p>
