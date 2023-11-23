@@ -255,9 +255,9 @@ class Carousel {
 
 function closeModal(sectionId) {
     const modal = document.getElementById(`myModal${sectionId}`);
-    modal.style.visibility = 'hidden';
+    modal.style.display = 'none';
 }
 function closeModalAffiche(modalAffiche) {
     const modal = document.getElementById(`${modalAffiche}`);
-    modal.style.visibility = 'hidden';
+    modal.style.display = 'none';
 }
