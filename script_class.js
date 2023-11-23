@@ -218,7 +218,7 @@ class Carousel {
             .then(data => {
                 // Remplissez le contenu de la fenêtre modale avec les caractéristiques du film
                 modalContentAffiche.innerHTML = `
-                    <button onclick="closeModal('${modalId}')">X</button>
+                    <button onclick="closeModalAffiche('${modalId}')">X</button>
                     <h2>${data.title}</h2>
                     <img src=${data.image_url} alt=${data.title}></img>
                     <p>Genres ${data.genres}</p>
@@ -246,6 +246,10 @@ class Carousel {
 });
 
 function closeModal(sectionId) {
-    const modal = document.getElementById(sectionId);
+    const modal = document.getElementById(`myModal${sectionId}`);
+    modal.style.visibility = 'hidden';
+}
+function closeModalAffiche(modalAffiche) {
+    const modal = document.getElementById(`${modalAffiche}`);
     modal.style.visibility = 'hidden';
 }

@@ -33,9 +33,13 @@ nav ul li {
 
 
 .affiche {
-    background-image: url("films/film1.jpg");
-    position: relative;
-    height: 40vh;
+    /* background-image: url("films/film1.jpg"); */
+    display: flex;
+    width: 100%;
+    height:70vh; /* Nouvelle hauteur */
+    background-size: cover;
+    background-position:center ;
+    background-repeat: no-repeat;
   
 }
 
@@ -46,8 +50,7 @@ nav ul li {
     top: 50%;
     left: 3%;
     transform: translateY(-50%);
-    z-index: 1;
-
+  
 }
 
 h1 {
