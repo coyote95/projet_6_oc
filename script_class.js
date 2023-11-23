@@ -156,6 +156,7 @@ class Carousel {
             modalContent.innerHTML = `
                 <button onclick="closeModal('${this.sectionId}')">X</button>
                 <h2>${data.title}</h2>
+                <img src=${data.image_url} alt=${data.title}</img>
                 <p>Genres ${data.genres}</p>
                 <p>Année de sortie: ${data.year}</p>
                 <p>Rated:${data.rated}</p>
