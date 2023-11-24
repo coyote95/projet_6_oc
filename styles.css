@@ -47,6 +47,7 @@ nav ul li {
 
 .content {
     position: absolute;
+    z-index: 0;
     top: 50%;
     left: 3%;
     transform: translateY(-50%);
@@ -60,7 +61,7 @@ h1 {
 
 p {
     font-size: 1em;
-    margin-bottom: none;
+    margin-bottom: 0px;
 }
 
 .play-button {
@@ -111,8 +112,10 @@ footer p {
 #modalContentAffiche
 {
     display: flex;
+    position: relative;
     width: 80%;
     overflow: hidden;
+    z-index: 5;
   }
   
   .carousel {
@@ -130,6 +133,17 @@ footer p {
     background-color: transparent;
     border: none ;
     cursor: pointer;
+}
+
+.modal{
+   
+    position: fixed;
+    z-index: 1000; /* Valeur plus élevée que le carrousel */
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 .modal button{
@@ -163,7 +177,3 @@ footer p {
     padding: 0px 0px;
 } 
 
-.flex{
-    display: flex;
-    
-}
