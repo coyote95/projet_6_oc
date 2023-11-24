@@ -183,7 +183,7 @@ footer p {
 @media (max-width: 800px) {
     .modal {
         width: 60%;
-        height: auto;
+        height: 35%;
     }
   
 }
