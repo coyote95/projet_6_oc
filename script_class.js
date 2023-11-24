@@ -168,7 +168,7 @@ class Carousel {
                         <p>Score Imdb:${data.imdb_score}</p>
                         <p>Réalisateur:${data.directors}</p>
                         <p>Acteurs:${data.actors}</p>
-                        <p>Durée:${data.duration}</p>
+                        <p>Durée:${data.duration} min</p>
                         <p>Origine:${data.countries}</p>
                         <p>Box Office:${data.worldwide_gross_income}</p>
                         <p>Résumé:${data.description}</p>
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <p>Score Imdb:${bestMovie.imdb_score}</p>
             <p>Réalisateur:${bestMovie.directors}</p>
             <p>Acteurs:${bestMovie.actors}</p>
-            <p>Durée:${bestMovie.duration}</p>
+            <p>Durée:${bestMovie.duration} min</p>
             <p>Origine:${bestMovie.countries}</p>
             <p>Box Office:${bestMovie.worldwide_gross_income}</p>
             <p>Résumé:${bestMovie.description}</p>
