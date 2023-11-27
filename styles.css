@@ -36,13 +36,12 @@ nav ul li {
     /* background-image: url("films/film1.jpg"); */
     display: flex;
     width: 100%;
-    height:70vh; /* Nouvelle hauteur */
+    height: 70vh;
+    /* Nouvelle hauteur */
     background-size: cover;
-    background-position:center ;
+    background-position: center;
     background-repeat: no-repeat;
-  
 }
-
 
 
 .content {
@@ -51,7 +50,6 @@ nav ul li {
     top: 50%;
     left: 3%;
     transform: translateY(-50%);
-  
 }
 
 h1 {
@@ -68,7 +66,7 @@ p {
     display: inline-block;
     padding: 1em 2em;
     background-color: #e50914;
-    border: none; 
+    border: none;
     color: #fff;
     text-decoration: none;
     font-weight: bold;
@@ -81,12 +79,11 @@ p {
     background-color: #ff0f24;
 }
 
-
 h2 {
     font-size: 2em;
     font-weight: bold;
     margin-top: 1em;
-    margin-left: 2em ;
+    margin-left: 2em;
     margin-bottom: 0.5em;
 }
 
@@ -100,90 +97,83 @@ footer p {
     font-size: 0.8em;
 }
 
-
-.bouton-container{
+.bouton-container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     gap: 10px;
 }
-#carousel-container1, #carousel-container2,
-#carousel-container3, #carousel-container4,
-#modalContentAffiche
-{
+
+.carousel_contain {
     display: flex;
     position: relative;
     width: 80%;
     overflow: hidden;
     z-index: 5;
-  }
-  
-  .carousel {
+}
+
+.carousel {
     display: flex;
     transition: transform 0.5s ease-in-out;
-  }
-  
-  .carousel-item {
+}
+
+.carousel-item {
     flex: 0 0 auto;
-  }
-  
- 
-  
-  button {
+}
+
+button {
     background-color: transparent;
-    border: none ;
+    border: none;
     cursor: pointer;
 }
 
-.modal{
-   padding: 10px;
+.modal {
+    padding: 10px;
     position: fixed;
-    z-index: 1000; /* Valeur plus élevée que le carrousel */
+    z-index: 1000;
+    /* Valeur plus élevée que le carrousel */
     width: 25%;
     height: auto;
     overflow: auto;
     transform: translate(-50%, -50%);
-    background-color: rgba(210, 207, 207,0.8);
+    background-color: rgba(210, 207, 207, 0.8);
     color: black;
     font-weight: bold;
 }
 
-.modal button{
+.modal button {
     border: 1px solid white;
     background-color: gray;
 }
 
-.modal img{
+.modal img {
     width: 50px;
     height: auto;
- 
 }
 
-
-.modal-content{
+.modal-content {
     margin-left: 20px;
     display: flex;
-    gap:10px;
+    gap: 10px;
     align-items: flex-end;
     flex-wrap: wrap;
 }
 
-.modal h2{
-    font-size: 1.2em  ;
+.modal h2 {
+    font-size: 1.2em;
     margin: 0px 0px;
     padding: 0px 0px;
-} 
+}
 
-.modal p{
+.modal p {
     font-size: 0.8em;
     margin: 0px 0px;
     padding: 0px 0px;
-} 
+}
 
 @media (max-width: 800px) {
     .modal {
         width: 60%;
         height: 35%;
     }
-  
 }
