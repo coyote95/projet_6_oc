@@ -1,7 +1,7 @@
 class Carousel {
     constructor(sectionId, initialUrl) {
         this.sectionId = sectionId;
-        this.itemsPerPage = 1;
+        this.switchItem = 1;
         this.currentImage = 0;
         this.nextUrl = initialUrl;
         this.start = 0;
@@ -57,10 +57,10 @@ class Carousel {
             }
         };
 
-        // Utilisation de await pour attendre la fin de chaque fetch
+        // Using async and await to wait for the completion of each fetch.
         (async () => {
-            await fetchAndDisplay(this.nextUrl); // Fetch de la première page
-            await fetchAndDisplay(this.nextUrl + "&page=2"); // Fetch de la deuxième page
+            await fetchAndDisplay(this.nextUrl); // Fetch page 1
+            await fetchAndDisplay(this.nextUrl + "&page=2"); // Fetch page 2
         })();
     }
 
@@ -92,15 +92,14 @@ class Carousel {
     nextSlide() {
         this.compteur++;
         this.currentImage++;
-        if (this.compteur >= 4) {
+        if (this.compteur >= 4) { // wait 4 clicks before loading new page
             this.fetchMovies();
             this.compteur = 0;
         }
 
         const carouselItems = document.querySelectorAll(`#carousel-container${this.sectionId} .carousel-item`);
-        const pageCount = Math.ceil(carouselItems.length / this.itemsPerPage);
 
-        if (this.currentImage >= pageCount) {
+        if (this.currentImage >= carouselItems) {
             this.currentImage = 0;
         }
 
@@ -109,25 +108,20 @@ class Carousel {
 
     prevSlide() {
         this.currentImage--;
-        const pageCount = Math.ceil(document.querySelectorAll(`#carousel-container${this.sectionId} .carousel-item`).length / this.itemsPerPage);
-
-        if (this.currentImage < 0) {
-            this.currentImage = pageCount - 1;
-        }
-
         this.updateCarousel();
     }
 
     updateCarousel() {
         const itemWidth = document.querySelector(`#carousel-container${this.sectionId} .carousel-item`).offsetWidth;
-        const newTransformValue = -this.currentImage * this.itemsPerPage * itemWidth + 'px';
+        const newTransformValue = -this.currentImage * itemWidth + 'px'; // position in the carousel chain
+
         const carouselContainer = document.getElementById(`carousel-container${this.sectionId}`);
         const prevButton = document.getElementById(`prevButton${this.sectionId}`);
 
         if (carouselContainer) {
             carouselContainer.querySelector('.carousel').style.transform = 'translateX(' + newTransformValue + ')';
 
-            // Toggle visibility of prevButton based on currentImage value
+            // hidden  prevButton if currentImage begin
             if (this.currentImage == 0) {
                 prevButton.style.visibility = 'hidden';
             } else {
@@ -170,7 +164,7 @@ class Carousel {
                         <p>Box Office:${data.worldwide_gross_income}</p>
                         <p>Résumé:${data.description}</p>
                     `;
-
+                        // display modal at mouse position
                         modal.style.left = mouseX + 'px';
                         modal.style.top = mouseY + 'px';
                         modal.style.visibility = 'visible';
@@ -188,7 +182,7 @@ class Carousel {
 class BestApi {
     constructor(apiUrl) {
         this.apiUrl = apiUrl;
-        this.bestMovie = null;
+        this.dataMovie = null;
         this.afficheSection = document.getElementById('afficheSection');
         this.afficheSection.addEventListener('click', (event) => this.openModalInBackground(event));
         this.init();
@@ -210,7 +204,7 @@ class BestApi {
                 throw new Error('Réponse de l\'API incorrecte. Aucun résultat trouvé.');
             }
 
-            this.bestMovie = data.results[0];
+            this.dataMovie = data.results[0];
             this.updateAffiche();
         } catch (error) {
             console.error('Erreur lors de la requête Fetch pour le meilleur film', error);
@@ -219,8 +213,8 @@ class BestApi {
 
     updateAffiche() {
         const contentTitle = this.afficheSection.querySelector('.content h2');
-        contentTitle.textContent = this.bestMovie.title;
-        this.afficheSection.style.backgroundImage = `url(${this.bestMovie.image_url})`;
+        contentTitle.textContent = this.dataMovie.title;
+        this.afficheSection.style.backgroundImage = `url(${this.dataMovie.image_url})`;
     }
 
     openModalInBackground(event) {
@@ -228,6 +222,7 @@ class BestApi {
             if (event) {
                 var mouseX = event.clientX;
                 var mouseY = event.clientY;
+
                 const modal = document.createElement('div');
                 modal.className = 'modal';
                 document.body.appendChild(modal);
@@ -238,18 +233,18 @@ class BestApi {
 
                 modalContentAffiche.innerHTML = `
                     <button onclick="closeModal()">X</button>
-                    <h2>${this.bestMovie.title}</h2>
-                    <img src=${this.bestMovie.image_url} alt=${this.bestMovie.title}></img>
-                    <p>Genres: ${this.bestMovie.genres}</p>
-                    <p>Année de sortie: ${this.bestMovie.year}</p>
-                    <p>Rated:${this.bestMovie.rated}</p>
-                    <p>Score Imdb:${this.bestMovie.imdb_score}</p>
-                    <p>Réalisateur:${this.bestMovie.directors}</p>
-                    <p>Acteurs:${this.bestMovie.actors}</p>
-                    <p>Durée:${this.bestMovie.duration} min</p>
-                    <p>Origine:${this.bestMovie.countries}</p>
-                    <p>Box Office:${this.bestMovie.worldwide_gross_income}</p>
-                    <p>Résumé:${this.bestMovie.description}</p>
+                    <h2>${this.dataMovie.title}</h2>
+                    <img src=${this.dataMovie.image_url} alt=${this.dataMovie.title}></img>
+                    <p>Genres: ${this.dataMovie.genres}</p>
+                    <p>Année de sortie: ${this.dataMovie.year}</p>
+                    <p>Rated:${this.dataMovie.rated}</p>
+                    <p>Score Imdb:${this.dataMovie.imdb_score}</p>
+                    <p>Réalisateur:${this.dataMovie.directors}</p>
+                    <p>Acteurs:${this.dataMovie.actors}</p>
+                    <p>Durée:${this.dataMovie.duration} min</p>
+                    <p>Origine:${this.dataMovie.countries}</p>
+                    <p>Box Office:${this.dataMovie.worldwide_gross_income}</p>
+                    <p>Résumé:${this.dataMovie.description}</p>
                 `;
                 modal.style.left = mouseX + 'px';
                 modal.style.top = mouseY + 'px';
@@ -261,10 +256,8 @@ class BestApi {
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Initialisation de la classe BestApi
     const bestApi = new BestApi('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
 
-    // Initialisation de la classe Carousel pour chaque carrousel
     const carousel1 = new Carousel('1', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
     const carousel2 = new Carousel('2', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Drama');
     const carousel3 = new Carousel('3', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Fantasy');
