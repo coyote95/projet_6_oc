@@ -122,7 +122,7 @@ class Carousel {
         const itemWidth = document.querySelector(`#carousel-container${this.sectionId} .carousel-item`).offsetWidth;
         const newTransformValue = -this.currentImage * this.itemsPerPage * itemWidth + 'px';
         const carouselContainer = document.getElementById(`carousel-container${this.sectionId}`);
-        const prevButton = document.getElementById(`prevButton${this.sectionId}`); // New line
+        const prevButton = document.getElementById(`prevButton${this.sectionId}`);
 
         if (carouselContainer) {
             carouselContainer.querySelector('.carousel').style.transform = 'translateX(' + newTransformValue + ')';
@@ -139,26 +139,23 @@ class Carousel {
     }
 
     openModal(urlfilm, event) {
-       
-        if ( document.querySelector('.modal')==null)
-        {  
-       
-        fetch(urlfilm)
-            .then(response => response.json())
-            .then(data => {
-                if (event) {
-                    var mouseX = event.clientX;
-                    var mouseY = event.clientY;
+        if (document.querySelector('.modal') == null) {
+            fetch(urlfilm)
+                .then(response => response.json())
+                .then(data => {
+                    if (event) {
+                        var mouseX = event.clientX;
+                        var mouseY = event.clientY;
 
-                    const modal = document.createElement('div');
-                    modal.className = 'modal';
-                    document.body.appendChild(modal);
+                        const modal = document.createElement('div');
+                        modal.className = 'modal';
+                        document.body.appendChild(modal);
 
-                    const modalContent = document.createElement('div');
-                    modalContent.className = 'modal-content';
-                    modal.appendChild(modalContent);
+                        const modalContent = document.createElement('div');
+                        modalContent.className = 'modal-content';
+                        modal.appendChild(modalContent);
 
-                    modalContent.innerHTML = `
+                        modalContent.innerHTML = `
                         <button onclick="closeModal()">X</button>
                         <h2>${data.title}</h2>
                         <img src=${data.image_url} alt=${data.title}></img>
@@ -174,94 +171,100 @@ class Carousel {
                         <p>Résumé:${data.description}</p>
                     `;
 
-                    // Définir la position de la modal en fonction des coordonnées de la souris
-                    modal.style.left = mouseX + 'px';
-                    modal.style.top = mouseY + 'px';
-
-                    // Afficher la modal
-                    modal.style.visibility = 'visible';
-                } else {
-                    console.error('Event object is undefined or null.');
-                }
-            })
-            .catch(error => {
-                console.error('Erreur lors de la requête Fetch', error);
-            });
-            
+                        modal.style.left = mouseX + 'px';
+                        modal.style.top = mouseY + 'px';
+                        modal.style.visibility = 'visible';
+                    } else {
+                        console.error('Event object is undefined or null.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la requête Fetch', error);
+                });
+        }
     }
 }
-}
 
-document.addEventListener('DOMContentLoaded', function () {
-    const afficheSection = document.getElementById('afficheSection');
-
-    // URL de l'API pour obtenir le meilleur film
-    const apiUrl = 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score';
-    let bestMovie;
-
-    // Fonction pour mettre à jour la section "affiche" avec les détails du meilleur film
-    function updateAffiche(data) {
-        const contentTitle = afficheSection.querySelector('.content h2');
-        contentTitle.textContent = data.title;
-
-        afficheSection.style.backgroundImage = `url(${data.image_url})`;
+class BestApi {
+    constructor(apiUrl) {
+        this.apiUrl = apiUrl;
+        this.bestMovie = null;
+        this.afficheSection = document.getElementById('afficheSection');
+        this.afficheSection.addEventListener('click', (event) => this.openModalInBackground(event));
+        this.init();
     }
 
-    // Fetch pour obtenir les données du meilleur film
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            bestMovie = data.results[0];
-            updateAffiche(bestMovie);
-        })
-        .catch(error => {
-            console.error('Erreur lors de la requête Fetch', error);
-        });
+    init() {
+        this.fetchBestMovie();
+    }
 
-    // Ajoutez un gestionnaire d'événements au conteneur de la section "affiche"
-    afficheSection.addEventListener('click', function (event) {
-        openModalInBackground(event);
-    });
-
-    // Fonction pour ouvrir la fenêtre modale en arrière-plan
-    function openModalInBackground(event) {
-       
-        if(document.querySelector('.modal')==null){
-            if (event) {
-                var mouseX = event.clientX;
-                var mouseY = event.clientY;
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        document.body.appendChild(modal);
-
-        const modalContentAffiche = document.createElement('div');
-        modalContentAffiche.className = 'modal-content';
-        modal.appendChild(modalContentAffiche);
-
-        modalContentAffiche.innerHTML = `
-            <button onclick="closeModal()">X</button>
-            <h2>${bestMovie.title}</h2>
-            <img src=${bestMovie.image_url} alt=${bestMovie.title}></img>
-            <p>Genres: ${bestMovie.genres}</p>
-            <p>Année de sortie: ${bestMovie.year}</p>
-            <p>Rated:${bestMovie.rated}</p>
-            <p>Score Imdb:${bestMovie.imdb_score}</p>
-            <p>Réalisateur:${bestMovie.directors}</p>
-            <p>Acteurs:${bestMovie.actors}</p>
-            <p>Durée:${bestMovie.duration} min</p>
-            <p>Origine:${bestMovie.countries}</p>
-            <p>Box Office:${bestMovie.worldwide_gross_income}</p>
-            <p>Résumé:${bestMovie.description}</p>
-        `;
-        modal.style.left = mouseX + 'px';
-        modal.style.top = mouseY + 'px';
-
-        modal.style.visibility = 'visible';
+    async fetchBestMovie() {
+        try {
+            const response = await fetch(this.apiUrl);
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP ! Status: ${response.status}`);
             }
+
+            const data = await response.json();
+            if (!data.results) {
+                throw new Error('Réponse de l\'API incorrecte. Aucun résultat trouvé.');
+            }
+
+            this.bestMovie = data.results[0];
+            this.updateAffiche();
+        } catch (error) {
+            console.error('Erreur lors de la requête Fetch pour le meilleur film', error);
         }
     }
 
-    // Initialize carousels
+    updateAffiche() {
+        const contentTitle = this.afficheSection.querySelector('.content h2');
+        contentTitle.textContent = this.bestMovie.title;
+        this.afficheSection.style.backgroundImage = `url(${this.bestMovie.image_url})`;
+    }
+
+    openModalInBackground(event) {
+        if (document.querySelector('.modal') == null) {
+            if (event) {
+                var mouseX = event.clientX;
+                var mouseY = event.clientY;
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                document.body.appendChild(modal);
+
+                const modalContentAffiche = document.createElement('div');
+                modalContentAffiche.className = 'modal-content';
+                modal.appendChild(modalContentAffiche);
+
+                modalContentAffiche.innerHTML = `
+                    <button onclick="closeModal()">X</button>
+                    <h2>${this.bestMovie.title}</h2>
+                    <img src=${this.bestMovie.image_url} alt=${this.bestMovie.title}></img>
+                    <p>Genres: ${this.bestMovie.genres}</p>
+                    <p>Année de sortie: ${this.bestMovie.year}</p>
+                    <p>Rated:${this.bestMovie.rated}</p>
+                    <p>Score Imdb:${this.bestMovie.imdb_score}</p>
+                    <p>Réalisateur:${this.bestMovie.directors}</p>
+                    <p>Acteurs:${this.bestMovie.actors}</p>
+                    <p>Durée:${this.bestMovie.duration} min</p>
+                    <p>Origine:${this.bestMovie.countries}</p>
+                    <p>Box Office:${this.bestMovie.worldwide_gross_income}</p>
+                    <p>Résumé:${this.bestMovie.description}</p>
+                `;
+                modal.style.left = mouseX + 'px';
+                modal.style.top = mouseY + 'px';
+                modal.style.visibility = 'visible';
+            }
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Initialisation de la classe BestApi
+    const bestApi = new BestApi('http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
+
+    // Initialisation de la classe Carousel pour chaque carrousel
     const carousel1 = new Carousel('1', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score');
     const carousel2 = new Carousel('2', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Drama');
     const carousel3 = new Carousel('3', 'http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Fantasy');
