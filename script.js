@@ -3,7 +3,6 @@ class Carousel {
         this.sectionId = sectionId;
         this.currentImage = 0;
         this.nextUrl = initialUrl;
-        this.start = 0;
         this.compteur = 0;
         this.init();
     }
