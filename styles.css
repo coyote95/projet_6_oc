@@ -44,7 +44,6 @@ nav ul li {
 
 .content {
     position: absolute;
-    z-index: 0;
     top: 50%;
     left: 3%;
     transform: translateY(-50%);
