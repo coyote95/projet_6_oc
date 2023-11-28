@@ -1,7 +1,6 @@
 class Carousel {
     constructor(sectionId, initialUrl) {
         this.sectionId = sectionId;
-        this.switchItem = 1;
         this.currentImage = 0;
         this.nextUrl = initialUrl;
         this.start = 0;
